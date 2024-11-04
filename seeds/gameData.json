@@ -1,17 +1,26 @@
 [
   {
     "user_id": 1,
-    "score": 1500,
-    "date": "2024-01-15T10:00:00Z"
+    "score": 2500,
+    "date": "2024-01-15T10:00:00Z",
+    "current_player_turn": 1,
+    "current_round": 1,
+    "last_date_updated": "2024-01-15T10:00:00Z"
   },
   {
     "user_id": 2,
-    "score": 2000,
-    "date": "2024-02-20T14:30:00Z"
+    "score": 3000,
+    "date": "2024-02-20T14:30:00Z",
+    "current_player_turn": 2,
+    "current_round": 2,
+    "last_date_updated": "2024-02-20T14:30:00Z"
   },
   {
     "user_id": 3,
-    "score": 1250,
-    "date": "2024-03-10T08:45:00Z"
+    "score": 1800,
+    "date": "2024-03-10T08:45:00Z",
+    "current_player_turn": 3,
+    "current_round": 3,
+    "last_date_updated": "2024-03-10T08:45:00Z"
   }
 ]
