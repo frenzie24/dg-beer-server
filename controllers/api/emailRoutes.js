@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-router.post('/send-email', withAuth, async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     log("attempting email")
     log(req.body);
     const { to, subject, user_id } = req.body;
