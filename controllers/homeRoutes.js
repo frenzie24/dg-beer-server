@@ -14,16 +14,9 @@ router.get('/', async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const users = usersData.map((post) => post.get({ plain: true }));
 
-    log(users)
+    log(usersData)
     // Pass serialized data and session flag into template
-    let nextPostID = 0;
-
-    users.forEach(post => nextPostID = post.id > nextPostID ? post.id : nextPostID)
-    log(nextPostID + 1);
-
-
 
     try {
       return res.status(200);

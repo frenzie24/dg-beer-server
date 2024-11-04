@@ -57,8 +57,8 @@ router.get('/', async (req, res) => {
         try {
             // Get all users and JOIN with user data and comments
 
-            const playersData = await User.findAll({
-                include: [{ model: Game }],
+            const playersData = await Player.findAll({
+                include: [{ model: Game }, {model: User}],
             });
 
             // Serialize data so the template can read it
@@ -116,7 +116,7 @@ router.get('/', withAuth, async (req, res) => {
 });
 */
 
-//update player
+//update player score
 router.patch('/', withAuth, async (req, res) => {
     log('============================');
     info(`updating player id: ${req.query.id}`);
@@ -133,9 +133,9 @@ router.patch('/', withAuth, async (req, res) => {
         }
         const player = await Player.findByPk(_id)
 
-        player.content = req.body.content;
+        player.score = req.body.score;
         player.save();
-        return res.status(200);
+        return res.status(200).json(player);
 
     } catch (err) {
         return handleError(err, req.session.logged_in, res);

@@ -15,7 +15,7 @@ Player.init(
       references: { model: "Game", key: 'id', unique: false },
       allowNull: false,
     },
-    current_score: {
+    score: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
