@@ -18,6 +18,15 @@ const app = express();
 // Specify on which port the Express.js server will run
 const PORT = process.env.PORT || 3001;
 
+//cors handlin
+const cors = require("cors"); const corsOptions = { origin: 'http://localhost:5173', credentials: true, optionSuccessStatus: 200, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+};
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
+
+// Handle preflight (OPTIONS) requests
+app.options('*', cors(corsOptions));  // This will ensure preflight requests are handled correctly
+
 
 // Sets up session and connect to our Sequelize db
 // Configure and link a session object with the sequelize store

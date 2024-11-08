@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:id', withAuth, async (req, res) => {
-  if(req.params.id == req.session.user_id) {
+  if (req.params.id == req.session.user_id) {
 
   }
   warn('OMFGGGGGGGGG')
@@ -100,6 +100,16 @@ router.get('/', async (req, res) => {
 
 });
 
+router.get('/profile', withAuth, async (req, res) => {
+  // The session should already be available here
+  if (req.session.logged_in) {
+    const userData = await User.findByPk(req.session.user_id);
+    res.json(userData);
+  } else {
+    res.status(401).json({ message: 'You must be logged in to view this page.' });
+  }
+});
+
 // handles logging in
 router.post('/login', async (req, res) => {
   info('attempting log in')
@@ -107,41 +117,48 @@ router.post('/login', async (req, res) => {
     const userData = await User.findOne({ where: { email: req.body.email } });
 
     if (!userData) {
-      warn(`userData is undefinded`)
-      res
+      warn(`userData is undefined`)
+      return res
         .status(400)
         .json({ message: 'Incorrect email or password, please try again' });
-      return;
     }
 
     const validPassword = await userData.checkPassword(req.body.password);
-    // check the password, if submitted password does not match stored hash password for user then exit
     if (!validPassword) {
       error(`invalid password attempt;`)
-      res
+      return res
         .status(400)
         .json({ message: 'Incorrect email or password, please try again' });
-      return;
     }
+
+    // Set session properties
+    req.session.user_id = userData.id;
+    req.session.logged_in = true;
+    await req.session.save();  // Ensure session is saved before sending response
+
     log('Login success.', 'brightGreen', 'bgBlack');
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-      log(`User: ${userData.first_name} has logged in.`);
-      res.status(200).json({ user: userData, message: 'You are now logged in!' });
-    });
+    log(req.session);  // Log session to ensure it's correct
+
+    res.json({ user: userData, message: 'You are now logged in!' });
+
+    log(`User: ${userData.first_name} has logged in.`);
+    info(`${req.session.user_id}\n${req.session.logged_in}`);
 
   } catch (err) {
     warn('We ran into an error:')
-    error(err);;
+    error(err);
     res.status(400).json(err);
   }
 });
 
+
+// Logs the user out
 router.post('/logout', (req, res) => {
+
+  log(`logout attempt\nlogged_in: ${req.session.logged_in}`);
   if (req.session.logged_in) {
+    log('Attempting to destroy the session');
     req.session.destroy(() => {
-      log('Log out success');
       res.status(204).end();
     });
   } else {
@@ -150,29 +167,27 @@ router.post('/logout', (req, res) => {
 });
 
 //update user email
-router.patch('/', withAuth, async (req, res) => {
-  log('============================');
-  info(`updating user email with id: ${req.query.id}`);
-  log(req.body, 'red', 'bgWhite');
-  log(req.session);
-  // log(req.body.content)
+router.post('/logout', (req, res) => {
+  log(`logout attempt\nlogged_in: ${req.session}`);
 
-  try {
+  if (req.session.logged_in) {
+    log('User is logged in, attempting to destroy the session');
+    req.session.destroy((err) => {
+      if (err) {
+        log('Error destroying session:', err);
+        return res.status(500).json({ message: 'Failed to log out' });
+      }
 
-    const _id = Math.floor(req.session.user_id);
-    if (!Number.isInteger(_id)) {
-      warn(`Bad request: id invalid`);
-
-    }
-    const user = await User.findByPk(_id)
-
-    user.email = req.body.email;
-    user.save();
-    return res.status(200).json(user);
-
-  } catch (err) {
-    return handleError(err, req.session.logged_in, res);
+      // Clear the session cookie after destroying the session
+      res.clearCookie('connect.sid'); // Use your actual session cookie name here
+      log('Session destroyed successfully');
+      return res.status(204).end();  // Successfully logged out (204 No Content)
+    });
+  } else {
+    log('User was not logged in');
+    res.status(404).json({ message: 'User not logged in' });  // User was not logged in, nothing to logout
   }
 });
+
 
 module.exports = router;
