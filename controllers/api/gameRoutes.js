@@ -38,16 +38,18 @@ router.get('/', withAuth, async (req, res) => {
     if (req.query.id) {
       warn('Attemping to find game by id');
       const gamesData = await Game.findAll({ where: { user_id: req.query.id } });
-
+      info('gamesData found: ', gamesData);
       res.status(200).json(gamesData);
     } else {
 
       warn('Attemping to find all games');
       const gamesData = await Game.findAll();
+      info('gamesData found: ', gamesData);
       res.status(200).json(gamesData);
    }
   } catch (error) {
-    res.status(400);//.json({ error: error.message });
+    error(error);
+    res.status(400).json({ error: error.message });
   }
 });
 
