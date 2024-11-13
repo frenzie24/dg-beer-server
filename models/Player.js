@@ -1,21 +1,49 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Player extends Model {}
+class Player extends Model { }
 
 Player.init(
   {
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     user_id: {
-        type: DataTypes.INTEGER,
-        references: { model: "User", key: 'id', unique: false },
-        allowNull: false,
+      type: DataTypes.INTEGER,
+      references: { model: "User", key: 'id', unique: false },
+      allowNull: false,
     },
     game_id: {
       type: DataTypes.INTEGER,
       references: { model: "Game", key: 'id', unique: false },
       allowNull: false,
     },
-    score: {
+    inventory: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    ordered: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    lastOrder: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    received: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    totalReceived: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    pendingReceived: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    roundsPending: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -23,7 +51,7 @@ Player.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    role: {
+    history: {
       type: DataTypes.STRING,
       allowNull: false,
     },

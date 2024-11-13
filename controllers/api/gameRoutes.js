@@ -47,13 +47,13 @@ router.get('/', withAuth, async (req, res) => {
       res.status(200).json(gamesData);
    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400);//.json({ error: error.message });
   }
 });
 
 // Add a new game
 router.post('/', withAuth, async (req, res) => {
-  const { score } = req.body;
+
   log(req.body);
   try {
     const newGame = await Game.create({
@@ -62,9 +62,9 @@ router.post('/', withAuth, async (req, res) => {
     });
     // new game added to the data base, log it and send a response
     info('New game created!')
-    res.status(201).json(newGame);
+    res.status(200).json(newGame);
   } catch (error) {
-    handleError(err, req.session.logged_in, res);
+    handleError(error, req.session.logged_in, res);
     res.status(400).json({ error: error.message });
   }
 });
@@ -74,15 +74,16 @@ router.patch('/', withAuth, async (req, res) => {
 
   const { score, current_player_turn, current_round } = req.body;
   log('============================');
-  info(`updating Game id: ${req.query.id}`);
-  log(req.body, 'red', 'bgWhite');
+  info(`updating Game id: ${req.body.id}`);
+  log(req.body.content, 'red', 'bgWhite');
   try {
-    const _id = Math.floor(req.query.id);
+    const _id = Math.floor(req.body.id);
     if (!Number.isInteger(_id)) {
         warn(`Bad request: id invalid`);
         return handleError(err, req.session.logged_in, res);
 
     }
+
     const game = await Game.findByPk(_id);
     game.content = req.body.content;
     game.save();

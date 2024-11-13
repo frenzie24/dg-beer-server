@@ -10,19 +10,28 @@ Game.init(
             references: { model: 'User', key: 'id', unique: false },
             allowNull: false,
         },
-        score: {
+
+        round: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+            allowNull: true,
+         },
         date: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
-        },
+        },/*
         current_player_turn: {
             type: DataTypes.INTEGER,
             allowNull: true,
+        },*/
+        selectedRole: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
         },
-        current_round: {
+        rounds: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        entropy: {
             type: DataTypes.INTEGER,
             allowNull: true,
         },
