@@ -113,6 +113,7 @@ router.get('/profile', withAuth, async (req, res) => {
 // handles logging in
 router.post('/login', async (req, res) => {
   info('attempting log in')
+  log(`Req body: ${JSON.stringify(req.body)}` )
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
 

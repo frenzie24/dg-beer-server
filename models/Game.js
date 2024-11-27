@@ -14,7 +14,7 @@ Game.init(
         round: {
             type: DataTypes.INTEGER,
             allowNull: true,
-         },
+        },
         date: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
@@ -38,6 +38,11 @@ Game.init(
         last_date_updated: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
+        },
+
+        history: {
+            type: DataTypes.TEXT,
+            allowNull: true,
         },
     },
     {

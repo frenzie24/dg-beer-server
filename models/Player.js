@@ -7,58 +7,58 @@ Player.init(
   {
     role_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     user_id: {
       type: DataTypes.INTEGER,
       references: { model: "User", key: 'id', unique: false },
-      allowNull: false,
+      allowNull: true,
     },
     game_id: {
       type: DataTypes.INTEGER,
       references: { model: "Game", key: 'id', unique: false },
-      allowNull: false,
+      allowNull: true,
     },
     inventory: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     ordered: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     lastOrder: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     received: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     totalReceived: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     pendingReceived: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     roundsPending: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     history: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
     sequelize,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
     modelName: 'Player',
