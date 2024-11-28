@@ -62,7 +62,7 @@ router.get('/', withAuth, async (req, res) => {
 // Add a new game
 router.post('/', withAuth, async (req, res) => {
 
-  log(req.body);
+ // log(req.body);
   try {
     const game = await Game.create({
       ...req.body.game,
@@ -92,7 +92,7 @@ router.post('/', withAuth, async (req, res) => {
 // Update an existing game by ID
 router.put('/', withAuth, async (req, res) => {
   log('============================');
-  warn(JSON.stringify(req.body));
+ // warn(JSON.stringify(req.body));
   info(`updating Game id: ${req.body.game.id}`);
   log(req.body.game, 'red', 'bgWhite');
 

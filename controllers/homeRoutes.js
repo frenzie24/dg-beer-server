@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   log('Homepage request');
   try {
     // Get all users and JOIN with user data and comments
-
+/*
     const usersData = await User.findAll({
       include: [{ model: Game }],
     });
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
     log(usersData)
     // Pass serialized data and session flag into template
-
+*/
     try {
       return res.status(200);
     } catch (err) {
