@@ -140,10 +140,11 @@ router.post('/login', async (req, res) => {
     log('Login success.', 'brightGreen', 'bgBlack');
     log(req.session);  // Log session to ensure it's correct
 
-    res.json({ user: userData, message: 'You are now logged in!' });
+
 
     log(`User: ${userData.first_name} has logged in.`);
-    info(`${req.session.user_id}\n${req.session.logged_in}`);
+   // info(`${req.session.user_id}\n${req.session.logged_in}`);
+   return res.json({ user: userData, message: 'You are now logged in!' });
 
   } catch (err) {
     warn('We ran into an error:')
