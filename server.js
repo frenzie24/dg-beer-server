@@ -16,7 +16,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // Initialize an instance of Express.js
 const app = express();
 // Specify on which port the Express.js server will run
-const PORT = process.env.PORT || 3001;
+const PORT =  3001;
 
 //cors handlin
 const cors = require("cors"); const corsOptions = { origin: 'http://localhost:5173', credentials: true, optionSuccessStatus: 200, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
