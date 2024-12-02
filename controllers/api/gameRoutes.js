@@ -62,7 +62,7 @@ router.get('/', withAuth, async (req, res) => {
 // Add a new game
 router.post('/', withAuth, async (req, res) => {
 
- // log(req.body);
+ log(req.body);
   try {
     const game = await Game.create({
       ...req.body.game,
