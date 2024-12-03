@@ -19,7 +19,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 //cors handlin
-const cors = require("cors"); const corsOptions = { origin: '*', credentials: true, optionSuccessStatus: 200, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+const cors = require("cors"); const corsOptions = { origin: 'https://thebeergame.netlify.app/', credentials: true, optionSuccessStatus: 200, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 };
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
